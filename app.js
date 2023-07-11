@@ -2,10 +2,12 @@ require('dotenv').config();
 
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
+const flash = require('connect-flash');
+const session = require('express-session');
 const connectDB = require('./server/config/db');
 
 const app = express();
-const port = 5000 || process.env.PORT;
+const port = 8888 || process.env.PORT;
 
 //Connect to DB
 connectDB();
@@ -15,6 +17,25 @@ app.use(express.json());
 
 //static folder
 app.use(express.static('public'));
+
+//Express Session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
+  })
+);
+
+// Flash Messages
+app.use(
+  flash({
+    sessionKeyName: 'flash',
+  })
+);
 
 //Templating engine
 app.use(expressLayout);
