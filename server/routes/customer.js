@@ -5,6 +5,8 @@ const customerController = require('../controllers/cutomerController');
 /**
  * Customer Routes
  */
+// router.get('/login',customerController.login);
+// router.get('/signin',customerController.signin);
 
 router.get('/', customerController.homepage);
 router.get('/hero', customerController.hero);
